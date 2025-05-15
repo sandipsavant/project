@@ -38,6 +38,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Send cookies with every axios request
+  axios.defaults.withCredentials = true;
+
+  // Use relative URLs in production; localhost in development
+const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -49,13 +56,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const { data } = await axios.post('http://localhost:5000/api/users/login', {
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        `${baseURL}/api/users/login`,
+        {
+          email,
+          password,
+        }
+      );
       setUser(data);
       localStorage.setItem('user', JSON.stringify(data));
-    } catch (err) {
+    } catch (err: any) {
       setError(
         err.response && err.response.data.message
           ? err.response.data.message
@@ -70,14 +80,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const { data } = await axios.post('http://localhost:5000/api/users', {
-        name,
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        `${baseURL}/api/users`,
+        {
+          name,
+          email,
+          password,
+        }
+      );
       setUser(data);
       localStorage.setItem('user', JSON.stringify(data));
-    } catch (err) {
+    } catch (err: any) {
       setError(
         err.response && err.response.data.message
           ? err.response.data.message
