@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Base API URL - relative path if VITE_API_URL is empty, fallback to localhost for dev
   const baseURL =
-    import.meta.env.VITE_API_URL && import.meta.env.VITE_API_URL !== ''
+    import.meta.env.VITE_API_URL && import.meta.env.FRONTEND_URL !== ''
       ? import.meta.env.VITE_API_URL
       : 'http://localhost:5000';
 
