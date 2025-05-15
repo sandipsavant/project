@@ -4,7 +4,7 @@ const API_URL = import.meta.env.FRONTEND_URL || '/api';
 
 // Create axios instance
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: '',
   headers: {
     'Content-Type': 'application/json',
       withCredentials: true,
